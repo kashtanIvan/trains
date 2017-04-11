@@ -8,6 +8,11 @@
         <div class="row">
             <h1>Расписание поездов</h1>
         </div>
+        @if($errors)
+            <div class="row">
+                <h2>Номер поезд такой есть</h2>
+            </div>
+        @endif
         <div class="row">
             <table class="table text-center table-bordered">
                 <tr>
@@ -18,11 +23,9 @@
                 </tr>
                 @foreach($trains as $train)
                     <tr>
-{{--                        {{ dd($train->toArray()) }}--}}
-                        {{--{{ dd($train) }}--}}
                         <td>{{ $train->name }}</td>
-                        <td>{{  $train->station()->first()->pivot->time }}</td>
-                        <td>{{  $train->station()->first()->station_name }}</td>
+                        <td>{{  $train->time }}</td>
+                        <td>{{  $train->station_name }}</td>
                         <td>{{ $train->schedule }}</td>
                     </tr>
                 @endforeach
@@ -37,23 +40,24 @@
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
+                        <li><a href="{{ route('index') }}">Все станции</a></li>
                         @foreach($stations->getAllStation() as $station)
-                        <li><a href="{{ route('train', ['id' => $station->id]) }}">{{ $station->station_name }}</a></li>
+                            <li><a href="{{ route('train', ['id' => $station->id]) }}">{{ $station->station_name }}</a></li>
                         @endforeach
                     </ul>
                 </li>
             </ul>
         </div>
+
+
         <div class="row">
             <ul class="list-inline">
-                    <li><a href="{{ route('addTrain') }}" class="btn btn-default btn-lg active" role="button">Добавить</a>
+                <li><a href="{{ route('addTrain') }}" class="btn btn-default btn-lg active" role="button">Добавить</a>
                 </li>
                 <li><a href="#" class="btn btn-default btn-lg active" role="button">Ссылка</a></li>
                 <li><a href="#" class="btn btn-default btn-lg active" role="button">Ссылка</a></li>
             </ul>
         </div>
-
-
     </div>
 
 @endsection

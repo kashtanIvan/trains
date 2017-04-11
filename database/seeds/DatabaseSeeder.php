@@ -17,38 +17,39 @@ class DatabaseSeeder extends Seeder
             'schedule' => 'пн-пт',
         ];
 
-        $route = [
-
+        $stations = [
+            [
                 'station_name' => 'Станция 1',
                 'order' => 0,
-                'id_train' => 1,
+            ],
+            [
+
+                'station_name' => 'Станция 2',
+                'order' => 1,
+            ],
+
         ];
 
         $train = App\Train::create($train);
-        $route = App\Route::create($route);
+        $stations = App\Station::insert($stations);
 
-        $route = [
-
-            'station_name' => 'Станция 2',
-            'order' => 1,
-            'id_train' => 1,
-
+        $train = [
+            'name' => 'Train 2',
+            'schedule' => 'сб-вс',
         ];
-        $route = App\Route::create($route);
+        $train = App\Train::create($train);
 
-        $route =[
-            'station_name' => 'Станция 3',
-            'order' => 2,
-            'id_train' => 1,
-
+        $tS = [
+            [
+                'train_id' => 2,
+                'station_id' => 1,
+            ],
+            [
+                'train_id' => 1,
+                'station_id' => 2,
+            ],
         ];
-        $route = App\Route::create($route);
+        DB::table('train_station')->insert($tS);
 
-        $route = [
-            'station_name' => 'Станция 4',
-            'order' => 3,
-            'id_train' => 1,
-        ];
-        $route = App\Route::create($route);
     }
 }

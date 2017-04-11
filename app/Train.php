@@ -14,7 +14,11 @@ class Train extends Model
         'schedule',
     ];
 
-    public function route(){
-        return $this->hasOne('App\Route');
+    public $rules = [
+        'name' => 'required|unique:trains|max:255',
+    ];
+
+    public function station(){
+        return $this->belongsToMany('App\Station', 'train_station')->withPivot('time');
     }
 }

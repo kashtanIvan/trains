@@ -15,3 +15,8 @@
 //    return view('layouts.app');
 //});
 Route::resource('/', 'TrainController');
+Route::get('train/{id}', 'TrainController@show')->name('train');
+//Route::get('train/cr', ['as' => 'addTrain', 'uses' => 'Controller@create']);
+
+Route::get('/add', ['as' => 'addTrain', 'uses' => 'AddTrainController@index']);
+Route::post('/add', ['as' => 'addTrain', 'uses' => 'AddTrainController@addTrain']);

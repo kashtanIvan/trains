@@ -20,6 +20,13 @@ class CreateTrainsTable extends Migration
             $table->string('schedule', 255)->default('пн-пт');
             $table->timestamps();
         });
+
+        Schema::create('train_station', function(Blueprint $table){
+            $table->increments('id');
+            $table->integer('train_id')->index()->unsigned();
+            $table->integer('station_id')->index()->unsigned();
+            $table->time('time')->default('000000');
+        });
     }
 
     /**

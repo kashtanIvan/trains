@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRoutesTable extends Migration
+class CreateStationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,9 +14,8 @@ class CreateRoutesTable extends Migration
     public function up()
     {
         //
-        Schema::create('routes', function(Blueprint $table){
+        Schema::create('stations', function(Blueprint $table){
             $table->increments('id');
-            $table->string('id_train', 255)->index();
             $table->string('station_name', 255)->default('no Station');
             $table->integer('order')->unsigned();
             $table->timestamps();
@@ -31,7 +30,7 @@ class CreateRoutesTable extends Migration
     public function down()
     {
         //
-        Schema::dropIfExists('routes');
+        Schema::dropIfExists('stations');
 
     }
 }
