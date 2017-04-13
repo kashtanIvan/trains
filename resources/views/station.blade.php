@@ -8,14 +8,14 @@
         <div class="row">
             <h1>Расписание поездов</h1>
         </div>
-        @if($errors)
-            <div class="row">
-                <h2>Номер поезд такой есть</h2>
-            </div>
+        @if(Session::has('delete'))
+            {{ Session::get('delete') }}
         @endif
+        {{ Form::open(array('url' => '/delete')) }}
         <div class="row">
             <table class="table text-center table-bordered">
                 <tr>
+                    <th class="text-center">Удаление</th>
                     <th class="text-center">Поезд</th>
                     <th class="text-center">Время отправления</th>
                     <th class="text-center">Пункт назначения</th>
@@ -23,6 +23,18 @@
                 </tr>
                 @foreach($trains as $train)
                     <tr>
+                        <td>
+                            <div class="actions">
+                                <a href="#">
+                                    <span data-toggle="tooltip" data-placement="top" title="Редактировать"
+                                          class="glyphicon glyphicon-pencil"></span>
+                                </a>
+                                <a href="{{ route('delete',['id'=>$train->id]) }}">
+                                    <span data-toggle="tooltip" data-placement="top" title="Удалить"
+                                          class="glyphicon glyphicon-trash"></span>
+                                </a>
+                            </div>
+                        </td>
                         <td>{{ $train->name }}</td>
                         <td>{{  $train->time }}</td>
                         <td>{{  $train->station_name }}</td>
