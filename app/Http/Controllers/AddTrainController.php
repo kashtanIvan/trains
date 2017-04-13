@@ -27,15 +27,18 @@ class AddTrainController extends Controller
         }
     }
 
+    /**
+     * Удаление поезда с расписания
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function delete($id)
     {
         $trainById = Train::find($id);
         if ($trainById) {
             $stationById = $trainById->station()->get();
             $tS = $stationById->first()->pivot;
-            $stationById = $stationById->first();
             $trainById->delete();
-            $stationById->delete();
             $tS->delete();
             session()->flash('delete', 'Запись удалена');
         } else {
