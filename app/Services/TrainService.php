@@ -34,11 +34,9 @@ class TrainService
      */
     public function getAllTrains()
     {
-        return DB::table('stations')
-            ->join('train_station', 'stations.id', '=', 'train_station.station_id')
-            ->join('trains', 'trains.id', '=', 'train_station.train_id')
-            ->select('*')
-            ->get();
+        return Train::with(['station' => function ($query) {
+            $query->orderBy('order', 'desc');
+        }])->get();
     }
 
     /**
@@ -57,12 +55,21 @@ class TrainService
      */
     public function getTrain($stationId)
     {
-        return DB::table('stations')
-            ->join('train_station', 'stations.id', '=', 'train_station.station_id', 'right')
-            ->join('trains', 'trains.id', '=', 'train_station.train_id', 'left')
-            ->select('*')
-            ->where('stations.id', '=', $stationId)
-            ->get();
+
+        return Train::with(['station' => function($query) use ($stationId){
+            $query->where('stations.id', '=', $stationId);
+        }])->whereHas('station', function($query) use ($stationId){
+            $query->where('stations.id', '=', $stationId);
+        })->get();
+//dd($s);
+//        return Train::with(['station' => function ($query) use ($stationId) {
+//            $query->where('stations.id', '=', $stationId);
+//        }])
+//            ->join('train_station', 'trains.id', '=', 'train_station.train_id', 'right')
+//            ->select('name', 'trains.id', 'schedule')
+//            ->where('station_id', '=', $stationId)
+//            ->get();
+
 
     }
 
