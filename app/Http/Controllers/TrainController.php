@@ -19,7 +19,7 @@ class TrainController extends Controller
     {
         $allTrains = $this->_trainService->getAllTrains();
 //        dd($allTrains->toArray());
-        return view('station')->with(['trains' => $allTrains]);
+        return view('index')->with(['trains' => $allTrains]);
     }
 
     /**
@@ -53,7 +53,7 @@ class TrainController extends Controller
     {
         $train = $this->_trainService->getTrain($id);
 //            dd($train->toArray());
-        return view('station')->with(['trains' => $train]);
+        return view('index')->with(['trains' => $train]);
     }
 
     /**

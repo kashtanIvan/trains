@@ -56,21 +56,36 @@ class TrainService
     public function getTrain($stationId)
     {
 
-        return Train::with(['station' => function($query) use ($stationId){
-            $query->where('stations.id', '=', $stationId);
-        }])->whereHas('station', function($query) use ($stationId){
+        $e = Train::with('station')->whereHas('station', function($query) use ($stationId){
             $query->where('stations.id', '=', $stationId);
         })->get();
-//dd($s);
-//        return Train::with(['station' => function ($query) use ($stationId) {
-//            $query->where('stations.id', '=', $stationId);
-//        }])
-//            ->join('train_station', 'trains.id', '=', 'train_station.train_id', 'right')
-//            ->select('name', 'trains.id', 'schedule')
-//            ->where('station_id', '=', $stationId)
-//            ->get();
+        return $e;
+dd($e);
+        $products = Product::with([
+            'order' => function($query) {
+                $query->select('id', 'client_name', 'date_ship_plan', 'order_status_id');
+            },
+            'productStage' => function($query) {
+                $query->select('stage_status_id', 'stage_id', 'product_id');
+            },
+            'productType' => function($query) {
+                $query->select('id', 'name');
+            },
+        ])
+            ->whereHas('order', function ($query){
+                $query->where('order_status_id', 2)
+                    ->where('date_ship_plan', '<', Carbon::now()->toDateTimeString());
+            })
 
-
+            ->get([
+                'product.id',
+                'product.order_id',
+                'product.number_client',
+                'product.description',
+                'product.note_production',
+                'product.date_ready_product',
+                'product.product_type_id',
+            ]);
     }
 
     /**

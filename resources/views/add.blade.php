@@ -11,6 +11,7 @@
 
         @if($errors)
             <div class="row">
+
                 <p class="text-danger">Номер поезда есть уже</p>
             </div>
         @endif

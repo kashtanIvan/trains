@@ -8,9 +8,13 @@
         <div class="row">
             <h1>Расписание поездов</h1>
         </div>
+        @if(Session::has('delete'))
+            {{ Session::get('delete') }}
+        @endif
         <div class="row">
             <table class="table text-center table-bordered">
                 <tr>
+                    <th class="text-center">Удалить</th>
                     <th class="text-center">Поезд</th>
                     <th class="text-center">Время отправления</th>
                     <th class="text-center">Пункт назначения</th>
@@ -18,10 +22,20 @@
                 </tr>
                 @foreach($trains as $train)
                     <tr>
-{{--                        {{ dd($train->toArray()) }}--}}
-                        {{--{{ dd($train) }}--}}
+                        <td>
+                            <div class="actions">
+                                <a href="#">
+                                    <span data-toggle="tooltip" data-placement="top" title="Редактировать"
+                                          class="glyphicon glyphicon-pencil"></span>
+                                </a>
+                                <a href="{{ route('delete',['id'=>$train->id]) }}">
+                                    <span data-toggle="tooltip" data-placement="top" title="Удалить"
+                                          class="glyphicon glyphicon-trash"></span>
+                                </a>
+                            </div>
+                        </td>
                         <td>{{ $train->name }}</td>
-                        <td>{{  $train->station()->first()->pivot->time }}</td>
+                        <td>{{  $train->station->first()->pivot->time }}</td>
                         <td>{{  $train->station()->first()->station_name }}</td>
                         <td>{{ $train->schedule }}</td>
                     </tr>
@@ -37,8 +51,10 @@
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
+                        <li><a href="{{ route('index') }}">Все станции</a></li>
                         @foreach($stations->getAllStation() as $station)
-                        <li><a href="{{ route('train', ['id' => $station->id]) }}">{{ $station->station_name }}</a></li>
+                            <li><a href="{{ route('train', ['id' => $station->id]) }}">{{ $station->station_name }}</a>
+                            </li>
                         @endforeach
                     </ul>
                 </li>
@@ -46,14 +62,12 @@
         </div>
         <div class="row">
             <ul class="list-inline">
-                    <li><a href="{{ route('addTrain') }}" class="btn btn-default btn-lg active" role="button">Добавить</a>
+                <li><a href="{{ route('addTrain') }}" class="btn btn-default btn-lg active" role="button">Добавить</a>
                 </li>
                 <li><a href="#" class="btn btn-default btn-lg active" role="button">Ссылка</a></li>
                 <li><a href="#" class="btn btn-default btn-lg active" role="button">Ссылка</a></li>
             </ul>
         </div>
-
-
     </div>
 
 @endsection

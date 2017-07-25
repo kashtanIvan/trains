@@ -20,3 +20,9 @@ Route::get('train/{id}', 'TrainController@show')->name('train');
 
 Route::get('/add', ['as' => 'addTrain', 'uses' => 'AddTrainController@index']);
 Route::post('/add', ['as' => 'addTrain', 'uses' => 'AddTrainController@addTrain']);
+Route::get('/delete/{id}', ['as' => 'delete', 'uses' =>'AddTrainController@delete']);
+Route::get('/test', ['as' => 'test', 'uses' =>'Controller@test']);
+
+
+Route::get('/file', ['as' => 'file', 'uses' =>'FileController@index']);
+
