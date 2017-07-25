@@ -13,7 +13,7 @@ class Category extends Model
     ];
 
     public function file(){
-        return $this->hasOne('App\File', 'type_cat', 'cat_id');
+        return $this->hasOne('App\File', 'cat_id');
     }
     public function fi(){
         return $this->hasMany('App\File', 'id');

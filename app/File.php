@@ -13,7 +13,7 @@ class File extends Model
     ];
 
     public function cat(){
-        return $this->belongsTo('App\Category');
+        return $this->belongsTo('App\Category', 'type_cat', 'cat_id');
     }
 
     public function ca(){
