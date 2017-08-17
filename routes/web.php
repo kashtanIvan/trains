@@ -25,4 +25,5 @@ Route::get('/test', ['as' => 'test', 'uses' =>'Controller@test']);
 
 
 Route::get('/file', ['as' => 'file', 'uses' =>'FileController@index']);
+Route::get('/ajax', ['as' => 'ajax', 'uses' =>'FileController@ajax']);
 
